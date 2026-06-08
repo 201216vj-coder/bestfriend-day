@@ -15,7 +15,7 @@ body{
   overflow:hidden;
 }
 
-/* SLIDES */
+/* 🌸 1. SLIDE ENTRY ANIMATION */
 .slide{
   display:none;
   height:100vh;
@@ -25,17 +25,35 @@ body{
   flex-direction:column;
   text-align:center;
   padding:20px;
+
+  opacity:0;
+  transform:translateY(30px);
+  transition: all 0.8s ease;
 }
 
 .slide.active{
   display:flex;
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* 💌 2. TEXT REVEAL ANIMATION */
+.reveal-line{
+  opacity:0;
+  transform:translateY(10px);
+  transition:0.6s ease;
+}
+
+.reveal-line.show{
+  opacity:1;
+  transform:translateY(0);
 }
 
 /* TEXT */
 h1,h2{ font-size:42px; margin:10px; }
 p{ font-size:24px; line-height:1.7; max-width:750px; }
 
-/* BUTTONS */
+/* 🖱️ 3. BUTTON ANIMATION */
 button{
   padding:14px 22px;
   border:none;
@@ -45,15 +63,12 @@ button{
   margin:10px;
   background:white;
   font-family:'Cormorant Garamond', serif;
+
+  transition: all 0.3s ease;
 }
 
-/* INPUT */
-input{
-  padding:12px;
-  font-size:18px;
-  border-radius:10px;
-  border:none;
-  text-align:center;
+button:hover{
+  transform:scale(1.08);
 }
 
 /* IMAGE GALLERY */
@@ -73,22 +88,34 @@ input{
   box-shadow:0 10px 20px rgba(0,0,0,0.2);
 }
 
-/* NO BUTTON FIX */
+/* 💥 NO BUTTON FIX + SMOOTH MOVE */
 #noBtn{
   position:fixed;
   z-index:9999;
+  transition: all 0.4s ease;
 }
 
-/* HEARTS */
+/* 💌 4. ENVELOPE (SLIDE 2 BUTTON EFFECT) */
+#noBtn{
+  animation: floaty 2.5s ease-in-out infinite;
+}
+
+@keyframes floaty{
+  0%,100%{ transform:translateY(0px); }
+  50%{ transform:translateY(-8px); }
+}
+
+/* ❤️ HEARTS (FINAL SLIDE) */
 .heart{
   position:absolute;
   color:red;
-  animation: floatUp 4s linear forwards;
+  animation: floatUp 6s linear forwards;
+  opacity:0.8;
 }
 
 @keyframes floatUp{
   from{transform:translateY(0);opacity:1;}
-  to{transform:translateY(-700px);opacity:0;}
+  to{transform:translateY(-900px);opacity:0;}
 }
 </style>
 </head>
@@ -105,7 +132,7 @@ input{
 
 <!-- 🟡 SLIDE 2 -->
 <div class="slide" id="s1">
-  <h2>🤨 Are you the real Bauni?</h2>
+  <h2 class="reveal-line">🤨 Are you the real Bauni?</h2>
   <button onclick="nextSlide()">😝 Yes</button>
   <button id="noBtn">🤥 Nope</button>
 </div>
@@ -113,7 +140,7 @@ input{
 <!-- 🟢 SLIDE 3 -->
 <div class="slide" id="s2">
   <h2>📸 Our memories</h2>
-  <p>You became my favorite memory 🌸</p>
+  <p class="reveal-line">You became my favorite memory 🌸</p>
 
   <div class="image-container">
     <img src="pic1.jpg">
@@ -126,8 +153,8 @@ input{
 
 <!-- 🔵 SLIDE 4 -->
 <div class="slide" id="s3">
-  <h2>💖 Appreciation</h2>
-  <p>You are amazing 🌸</p>
+  <h2 class="reveal-line">💖 Appreciation</h2>
+  <p class="reveal-line">You are amazing 🌸</p>
 
   <button onclick="nextSlide()">😝 Next</button>
 </div>
@@ -135,7 +162,7 @@ input{
 <!-- 🟠 SLIDE 5 -->
 <div class="slide" id="s4">
   <h2>😎 Official Notice</h2>
-  <p>You are stuck 😆</p>
+  <p class="reveal-line">You are stuck 😆</p>
 
   <button onclick="nextSlide()">😝 Continue</button>
 </div>
@@ -169,6 +196,17 @@ function showSlide(n){
   document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
   document.getElementById('s'+n).classList.add('active');
   current=n;
+
+  runRevealAnimation();
+}
+
+/* 💌 TEXT REVEAL SYSTEM */
+function runRevealAnimation(){
+  let lines=document.querySelectorAll(".reveal-line");
+  lines.forEach((el,i)=>{
+    el.classList.remove("show");
+    setTimeout(()=>el.classList.add("show"), i*400);
+  });
 }
 
 function nextSlide(){
@@ -177,7 +215,7 @@ function nextSlide(){
   if(current===5) typeText();
 }
 
-/* 💥 NO BUTTON IMPOSSIBLE MODE */
+/* 💥 NO BUTTON SMOOTH CHAOS */
 const noBtn = document.getElementById("noBtn");
 
 function moveNoButton(){
@@ -193,23 +231,14 @@ function moveNoButton(){
   noBtn.style.top = y + "px";
 }
 
-/* Desktop */
+/* hover + click + touch */
 noBtn.addEventListener("mouseenter", moveNoButton);
-noBtn.addEventListener("click", (e)=>{
-  e.preventDefault();
-  moveNoButton();
-});
+noBtn.addEventListener("click", (e)=>{ e.preventDefault(); moveNoButton(); });
+noBtn.addEventListener("touchstart", (e)=>{ e.preventDefault(); moveNoButton(); });
 
-/* Mobile */
-noBtn.addEventListener("touchstart", (e)=>{
-  e.preventDefault();
-  moveNoButton();
-});
+setInterval(moveNoButton, 1500);
 
-/* extra chaos */
-setInterval(moveNoButton, 1200);
-
-/* TYPING */
+/* 💌 FINAL TYPE TEXT */
 function typeText(){
   const text="You became my favorite part of everything 💖";
   let i=0;
@@ -220,8 +249,21 @@ function typeText(){
     i++;
     if(i>=text.length){
       clearInterval(interval);
+      hearts();
     }
   },40);
+}
+
+/* ❤️ FINAL HEARTS (SLOW & SOFT) */
+function hearts(){
+  setInterval(()=>{
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+  },400);
 }
 
 </script>
