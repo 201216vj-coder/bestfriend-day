@@ -15,7 +15,7 @@ body{
   overflow:hidden;
 }
 
-/* SLIDES */
+/* 🌸 SLIDE ENTRY */
 .slide{
   display:none;
   height:100vh;
@@ -25,27 +25,34 @@ body{
   flex-direction:column;
   text-align:center;
   padding:20px;
+  opacity:0;
+  transform:translateY(30px);
+  transition:0.8s ease;
 }
 
 .slide.active{
   display:flex;
+  opacity:1;
+  transform:translateY(0);
 }
 
-/* TEXT */
+/* 💌 BIG EMOTIONAL PARAGRAPHS */
+p{
+  font-size:28px;
+  line-height:2;
+  max-width:850px;
+  margin:12px auto;
+}
+
+/* HEADINGS */
 h1,h2{
-  font-size:42px;
+  font-size:46px;
   margin:10px;
 }
 
-p{
-  font-size:24px;
-  line-height:1.7;
-  max-width:750px;
-}
-
-/* BUTTONS */
+/* 🖱️ BUTTONS */
 button{
-  padding:14px 22px;
+  padding:14px 24px;
   border:none;
   border-radius:20px;
   cursor:pointer;
@@ -53,11 +60,11 @@ button{
   margin:10px;
   background:white;
   font-family:'Cormorant Garamond', serif;
-  transition:0.3s;
+  transition:0.35s ease;
 }
 
 button:hover{
-  transform:scale(1.08);
+  transform:scale(1.1);
 }
 
 /* IMAGE */
@@ -65,42 +72,30 @@ button:hover{
   display:grid;
   grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
   gap:15px;
-  max-width:800px;
-  margin-top:15px;
+  max-width:850px;
+  margin-top:20px;
 }
 
 .image-container img{
   width:100%;
-  height:220px;
+  height:240px;
   object-fit:cover;
   border-radius:15px;
-  box-shadow:0 10px 20px rgba(0,0,0,0.2);
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
 }
 
 /* NO BUTTON */
 #noBtn{
   position:fixed;
   z-index:9999;
-  transition:0.3s ease;
 }
 
-/* PARAGRAPH ANIMATION */
-.reveal{
-  opacity:0;
-  transform:translateY(10px);
-  transition:0.6s ease;
-}
-
-.reveal.show{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* HEARTS */
+/* ❤️ HEARTS */
 .heart{
   position:absolute;
   color:red;
   animation: floatUp 6s linear forwards;
+  opacity:0.8;
 }
 
 @keyframes floatUp{
@@ -123,16 +118,29 @@ button:hover{
 <!-- 🟡 SLIDE 2 -->
 <div class="slide" id="s1">
   <h2>🤨 Are you the real Bauni?</h2>
+
+  <p>
+    This is not just a question… it is a test of memories, emotions, and everything we shared.
+    If you are really Bauni, you already know the answer hidden in our moments.
+  </p>
+
   <button onclick="nextSlide()">😝 Yes</button>
   <button id="noBtn">🤥 Nope</button>
 </div>
 
 <!-- 🟢 SLIDE 3 -->
 <div class="slide" id="s2">
-  <h2>📸 Our memories</h2>
+  <h2>📸 Our Memories</h2>
 
-  <p class="reveal">Every laugh, every chaos…</p>
-  <p class="reveal">You became my favorite memory 🌸</p>
+  <p>
+    Every laugh we shared, every random conversation, every silly chaos —
+    slowly became something I never expected to become so important.
+  </p>
+
+  <p>
+    You didn’t just become a part of my days…
+    you became a part of my thoughts, my comfort, my favorite silence.
+  </p>
 
   <div class="image-container">
     <img src="pic1.jpg">
@@ -147,9 +155,15 @@ button:hover{
 <div class="slide" id="s3">
   <h2>💖 Appreciation</h2>
 
-  <p class="reveal">For smiling through everything 😆</p>
-  <p class="reveal">For being there always 🌸</p>
-  <p class="reveal">You matter a lot ✨</p>
+  <p>
+    For the way you stay even when things are random.
+    For the way you smile through chaos without even trying.
+  </p>
+
+  <p>
+    For being someone who makes ordinary days feel softer,
+    warmer, and a little more meaningful than before.
+  </p>
 
   <button onclick="nextSlide()">😝 Next</button>
 </div>
@@ -158,8 +172,10 @@ button:hover{
 <div class="slide" id="s4">
   <h2>😎 Official Notice</h2>
 
-  <p class="reveal">You are now stuck 😆</p>
-  <p class="reveal">No escape exists 🔒</p>
+  <p>
+    You are now officially stuck inside this little world I built.
+    There is no exit because honestly… I don’t want there to be one.
+  </p>
 
   <button onclick="nextSlide()">😝 Continue</button>
 </div>
@@ -193,19 +209,6 @@ function showSlide(n){
   document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
   document.getElementById('s'+n).classList.add('active');
   current=n;
-
-  revealText();
-}
-
-/* 🌸 PARAGRAPH REVEAL SYSTEM */
-function revealText(){
-  let items=document.querySelectorAll(".reveal");
-  items.forEach((el,i)=>{
-    el.classList.remove("show");
-    setTimeout(()=>{
-      el.classList.add("show");
-    }, i*400);
-  });
 }
 
 /* NEXT */
@@ -215,7 +218,7 @@ function nextSlide(){
   if(current===5) typeText();
 }
 
-/* 💥 NO BUTTON (MOBILE + PC SAFE) */
+/* 💥 NO BUTTON MOVEMENT */
 const noBtn=document.getElementById("noBtn");
 
 function moveNo(){
@@ -231,7 +234,7 @@ noBtn.addEventListener("click",(e)=>{e.preventDefault();moveNo();});
 noBtn.addEventListener("touchstart",(e)=>{e.preventDefault();moveNo();});
 setInterval(moveNo,1200);
 
-/* FINAL TEXT */
+/* 💌 FINAL TEXT */
 function typeText(){
   const text="You became my favorite part of everything 💖";
   let i=0;
@@ -247,7 +250,7 @@ function typeText(){
   },40);
 }
 
-/* HEARTS */
+/* ❤️ HEARTS */
 function hearts(){
   setInterval(()=>{
     let h=document.createElement("div");
