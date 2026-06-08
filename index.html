@@ -31,7 +31,6 @@ body {
   position: relative;
 }
 
-/* ── SLIDES ── */
 .slide {
   position: absolute;
   inset: 0;
@@ -56,7 +55,6 @@ body {
 @keyframes pageIn  { from{opacity:0;transform:translateY(36px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
 @keyframes pageOut { from{opacity:1;transform:translateY(0) scale(1)} to{opacity:0;transform:translateY(-20px) scale(0.98)} }
 
-/* ── CARD ── */
 .card {
   background: rgba(255,255,255,0.68);
   backdrop-filter: blur(22px);
@@ -73,7 +71,6 @@ body {
   gap: 18px;
 }
 
-/* ── TYPE ── */
 h1, h2 {
   font-family: "Cormorant Garamond", serif;
   color: var(--rose-dark);
@@ -92,7 +89,6 @@ h3 {
 .emoji-big { font-size:clamp(2.8rem,7vw,4.5rem); line-height:1; display:block; }
 .divider { width:56px; height:2px; background:linear-gradient(90deg,transparent,var(--pink-deep),transparent); border:none; margin:0 auto; }
 
-/* ── PARAGRAPH LINES ── */
 p.body-line {
   font-family: "Lato", sans-serif;
   font-size: clamp(1rem,2.1vw,1.13rem);
@@ -114,7 +110,6 @@ p.body-line.instant { opacity:1; transform:none; animation:none; }
 }
 .para-block { display:flex; flex-direction:column; gap:14px; width:100%; max-width:580px; align-items:center; }
 
-/* ── INPUT ── */
 input[type="password"] {
   padding:14px 24px;
   border:1.5px solid var(--pink-deep);
@@ -131,7 +126,6 @@ input[type="password"] {
 }
 input[type="password"]:focus { border-color:var(--rose); box-shadow:0 0 0 4px rgba(192,57,90,0.13); }
 
-/* ── BUTTONS ── */
 .btn-row { display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:4px; }
 button.btn {
   padding:13px 34px;
@@ -157,7 +151,6 @@ button.btn-ghost {
 button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04); }
 #error { color:var(--rose); font-size:.9rem; min-height:18px; }
 
-/* ── ENVELOPE (SLIDE 2) ── */
 .envelope-btn {
   background: none;
   border: none;
@@ -192,7 +185,6 @@ button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04
 }
 @keyframes pulse { 0%,100%{opacity:.5;} 50%{opacity:1;} }
 
-/* ── CONFIRMED BADGE ── */
 .badge {
   background: linear-gradient(135deg,#fff0f4,#ffd6e2);
   border: 1.5px solid rgba(192,57,90,0.2);
@@ -208,7 +200,6 @@ button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04
 }
 @keyframes badgePop { from{opacity:0;transform:scale(0.7);} to{opacity:1;transform:scale(1);} }
 
-/* ── IMAGE GRID ── */
 .image-grid {
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -228,7 +219,6 @@ button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04
 .img-bday  { object-position: center 20%; }
 .img-kurti { object-position: center top; }
 
-/* ── LOCK SLIDE ITEMS ── */
 .lock-list {
   display:flex; flex-direction:column; gap:12px;
   width:100%; max-width:500px; align-items:flex-start;
@@ -255,7 +245,6 @@ button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04
   to{opacity:1;transform:translateX(0);}
 }
 
-/* ── NO BUTTON ── */
 #noBtn {
   position:fixed !important;
   z-index:9999;
@@ -269,7 +258,6 @@ button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04
               transform 180ms var(--spring) !important;
 }
 
-/* ── PROGRESS ── */
 #progressDots {
   position:fixed; top:18px; left:50%; transform:translateX(-50%);
   display:none; gap:9px; z-index:200;
@@ -279,7 +267,6 @@ button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04
 .dot.done   { background:rgba(255,255,255,.7); }
 .dot.active { background:white; transform:scale(1.5); }
 
-/* ── FINAL TYPE ── */
 #finalText {
   font-family:"Cormorant Garamond",serif;
   font-size:clamp(1.35rem,3vw,2rem);
@@ -290,7 +277,6 @@ button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04
   min-height:2.2em;
 }
 
-/* ── HEARTS ── */
 .heart { position:fixed; pointer-events:none; z-index:9998; animation:heartFloat linear forwards; }
 @keyframes heartFloat {
   0%  {transform:translateY(0) rotate(0deg) scale(1); opacity:.9;}
@@ -324,7 +310,6 @@ button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04
   <div class="dot"></div>
 </div>
 
-<!-- ══════ SLIDE 0 — PASSWORD ══════ -->
 <div class="slide active" id="s0">
   <div class="card">
     <span class="emoji-big">🔐</span>
@@ -342,7 +327,6 @@ button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04
   </div>
 </div>
 
-<!-- ══════ SLIDE 1 — IDENTITY CHECK ══════ -->
 <div class="slide" id="s1">
   <div class="card">
     <span class="emoji-big">🤨</span>
@@ -368,7 +352,6 @@ button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04
   </div>
 </div>
 
-<!-- ══════ SLIDE 2 — CONFIRMATION + ENVELOPE ══════ -->
 <div class="slide" id="s2">
   <div class="card">
     <div class="badge">✅ Identity Confirmed</div>
@@ -391,7 +374,6 @@ button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04
   </div>
 </div>
 
-<!-- ══════ SLIDE 3 — MEMORIES ══════ -->
 <div class="slide" id="s3">
   <div class="card">
     <span class="emoji-big">📸</span>
@@ -411,9 +393,9 @@ button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04
       </p>
     </div>
     <div class="image-grid">
-      <img class="img-field" src="713023079_1462598475615040_3297790707620812490_n.jpg" alt="Flower field" loading="lazy">
-      <img class="img-bday"  src="629868481_1615771759463297_2259668438205381811_n.jpg" alt="Birthday" loading="lazy">
-      <img class="img-kurti" src="624631693_1270098181653888_2214029473893478739_n.jpg" alt="Bauni" loading="lazy">
+      <img class="img-field" src="bauni_flowers.jpg" alt="Flower field" loading="lazy">
+      <img class="img-bday"  src="bauni_birthday.jpg" alt="Birthday" loading="lazy">
+      <img class="img-kurti" src="bauni_kurti.jpg" alt="Bauni" loading="lazy">
     </div>
     <div class="btn-row">
       <button class="btn" onclick="nextSlide()">💖 Next</button>
@@ -421,7 +403,6 @@ button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04
   </div>
 </div>
 
-<!-- ══════ SLIDE 4 — APPRECIATION ══════ -->
 <div class="slide" id="s4">
   <div class="card">
     <span class="emoji-big">💖</span>
@@ -450,7 +431,6 @@ button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04
   </div>
 </div>
 
-<!-- ══════ SLIDE 5 — FUNNY LOCK SLIDE ══════ -->
 <div class="slide" id="s5">
   <div class="card">
     <span class="emoji-big">😎</span>
@@ -469,7 +449,6 @@ button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04
   </div>
 </div>
 
-<!-- ══════ SLIDE 6 — FINAL LETTER ══════ -->
 <div class="slide" id="s6">
   <div class="card">
     <span class="emoji-big">💌</span>
@@ -493,12 +472,9 @@ button.btn-ghost:hover { background:white; transform:translateY(-2px) scale(1.04
 </div>
 
 <script>
-/* ── STATE ── */
 let current = 0;
-const slides = 7; // s0–s6
 const password = "#proudlesbianbauni";
 
-/* ── PASSWORD ── */
 function checkPass() {
   const inp = document.getElementById("passInput");
   const err = document.getElementById("error");
@@ -506,7 +482,7 @@ function checkPass() {
     goToSlide(1);
     document.getElementById("progressDots").classList.add("visible");
   } else {
-    err.textContent = "Hmm, that\'s not it 😆 Try again!";
+    err.textContent = "Hmm, that's not it 😆 Try again!";
     inp.focus(); inp.select();
   }
 }
@@ -514,7 +490,6 @@ document.getElementById("passInput").addEventListener("keydown", e => {
   if (e.key === "Enter") checkPass();
 });
 
-/* ── SLIDE ENGINE ── */
 function goToSlide(n) {
   const prev = document.getElementById("s" + current);
   const next = document.getElementById("s" + n);
@@ -533,7 +508,6 @@ function goToSlide(n) {
 }
 function nextSlide() { goToSlide(current + 1); }
 
-/* ── DOTS ── */
 function updateDots(n) {
   document.querySelectorAll(".dot").forEach((d, i) => {
     d.classList.remove("active","done");
@@ -542,7 +516,6 @@ function updateDots(n) {
   });
 }
 
-/* ── LINE REVEAL ── */
 function revealLines(slideNum) {
   const block = document.getElementById("pb" + slideNum);
   if (!block) return;
@@ -554,7 +527,6 @@ function revealLines(slideNum) {
   });
 }
 
-/* ── LOCK ITEMS REVEAL ── */
 function revealLockItems() {
   document.querySelectorAll(".lock-item").forEach((item, i) => {
     item.classList.remove("revealed");
@@ -564,7 +536,6 @@ function revealLockItems() {
   });
 }
 
-/* ── RUNAWAY NO BUTTON ── */
 const noBtn = document.getElementById("noBtn");
 let placed = false;
 function moveNo() {
@@ -587,7 +558,6 @@ new MutationObserver(() => {
   if (document.getElementById("s1").classList.contains("active") && !placed) moveNo();
 }).observe(document.getElementById("s1"), { attributes: true });
 
-/* ── FINAL SEQUENCE ── */
 function startFinal() {
   setTimeout(typeText, 1800);
 }
@@ -606,7 +576,6 @@ function typeText() {
   }, 50);
 }
 
-/* ── HEARTS ── */
 function launchHearts() {
   const emojis = ["❤️","🩷","💕","💗","💖","🌸","✨","🫶"];
   let count = 0;
