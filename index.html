@@ -25,13 +25,10 @@ body{
   flex-direction:column;
   text-align:center;
   padding:20px;
-  opacity:0;
-  transition:0.8s ease;
 }
 
 .slide.active{
   display:flex;
-  opacity:1;
 }
 
 /* TEXT */
@@ -47,10 +44,8 @@ button{
   font-size:18px;
   margin:10px;
   background:white;
-  transition:0.3s;
   font-family:'Cormorant Garamond', serif;
 }
-button:hover{ transform:scale(1.1); }
 
 /* INPUT */
 input{
@@ -61,19 +56,7 @@ input{
   text-align:center;
 }
 
-/* SHAKE */
-.shake{
-  animation:shake 0.4s;
-}
-
-@keyframes shake{
-  0%,100%{transform:translateX(0);}
-  25%{transform:translateX(-5px);}
-  50%{transform:translateX(5px);}
-  75%{transform:translateX(-5px);}
-}
-
-/* IMAGE FIX (CLEAN GALLERY) */
+/* IMAGE GALLERY */
 .image-container{
   display:grid;
   grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
@@ -90,6 +73,12 @@ input{
   box-shadow:0 10px 20px rgba(0,0,0,0.2);
 }
 
+/* NO BUTTON FIX */
+#noBtn{
+  position:fixed;
+  z-index:9999;
+}
+
 /* HEARTS */
 .heart{
   position:absolute;
@@ -100,12 +89,6 @@ input{
 @keyframes floatUp{
   from{transform:translateY(0);opacity:1;}
   to{transform:translateY(-700px);opacity:0;}
-}
-
-/* CHAOS BUTTON FIX */
-.moving-btn{
-  position:fixed !important;
-  z-index:9999;
 }
 </style>
 </head>
@@ -129,8 +112,7 @@ input{
 
 <!-- 🟢 SLIDE 3 -->
 <div class="slide" id="s2">
-  <h2>📸 Our little moments</h2>
-  <p>Every laugh, every chaos 😆</p>
+  <h2>📸 Our memories</h2>
   <p>You became my favorite memory 🌸</p>
 
   <div class="image-container">
@@ -140,17 +122,14 @@ input{
   </div>
 
   <button onclick="nextSlide()">😝 Next</button>
-  <button id="b3">🚪 Leave</button>
 </div>
 
 <!-- 🔵 SLIDE 4 -->
 <div class="slide" id="s3">
   <h2>💖 Appreciation</h2>
-  <p>For always smiling 🌸</p>
-  <p>You’re the best ✨</p>
+  <p>You are amazing 🌸</p>
 
   <button onclick="nextSlide()">😝 Next</button>
-  <button id="b4">❌ Close</button>
 </div>
 
 <!-- 🟠 SLIDE 5 -->
@@ -159,14 +138,13 @@ input{
   <p>You are stuck 😆</p>
 
   <button onclick="nextSlide()">😝 Continue</button>
-  <button id="b5">🔓 Escape</button>
 </div>
 
-<!-- 🔴 SLIDE 6 -->
+<!-- 🔴 FINAL -->
 <div class="slide" id="s5">
   <h2>💌 Final Message</h2>
   <p id="finalText"></p>
-  <h3>Stay forever 🌸💖</h3>
+  <h3>Stay forever 💖</h3>
 </div>
 
 <script>
@@ -183,8 +161,6 @@ function checkPass(){
     showSlide(1);
   }else{
     err.innerText="Try again 😆";
-    inp.classList.add("shake");
-    setTimeout(()=>inp.classList.remove("shake"),400);
   }
 }
 
@@ -197,30 +173,41 @@ function showSlide(n){
 
 function nextSlide(){
   current++;
-  if(current<=5){
-    showSlide(current);
-    if(current===5) typeText();
-  }
+  showSlide(current);
+  if(current===5) typeText();
 }
 
-/* CHAOS MODE (FIXED) */
-function chaosMode(btn){
-  btn.classList.add("moving-btn");
+/* 💥 NO BUTTON IMPOSSIBLE MODE */
+const noBtn = document.getElementById("noBtn");
 
-  setInterval(() => {
-    const maxX = window.innerWidth - btn.offsetWidth;
-    const maxY = window.innerHeight - btn.offsetHeight;
+function moveNoButton(){
+  const padding = 20;
 
-    btn.style.left = Math.random()*maxX + "px";
-    btn.style.top = Math.random()*maxY + "px";
-  }, 500);
+  const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+  const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
 }
 
-/* APPLY CHAOS */
-chaosMode(document.getElementById("noBtn"));
-chaosMode(document.getElementById("b3"));
-chaosMode(document.getElementById("b4"));
-chaosMode(document.getElementById("b5"));
+/* Desktop */
+noBtn.addEventListener("mouseenter", moveNoButton);
+noBtn.addEventListener("click", (e)=>{
+  e.preventDefault();
+  moveNoButton();
+});
+
+/* Mobile */
+noBtn.addEventListener("touchstart", (e)=>{
+  e.preventDefault();
+  moveNoButton();
+});
+
+/* extra chaos */
+setInterval(moveNoButton, 1200);
 
 /* TYPING */
 function typeText(){
@@ -233,21 +220,8 @@ function typeText(){
     i++;
     if(i>=text.length){
       clearInterval(interval);
-      hearts();
     }
   },40);
-}
-
-/* HEARTS */
-function hearts(){
-  setInterval(()=>{
-    let h=document.createElement("div");
-    h.className="heart";
-    h.innerHTML="❤️";
-    h.style.left=Math.random()*100+"vw";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),4000);
-  },250);
 }
 
 </script>
