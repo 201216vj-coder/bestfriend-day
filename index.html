@@ -86,12 +86,21 @@ input{
   75%{transform:translateX(-5px);}
 }
 
-/* IMAGES */
+/* IMAGE GRID FIX */
 img{
-  width:180px;
-  margin:10px;
+  width:100%;
+  height:100%;
+  object-fit:cover;
   border-radius:15px;
   box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+
+.image-container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+  gap:15px;
+  max-width:800px;
+  margin-top:15px;
 }
 
 /* HEARTS */
@@ -110,7 +119,7 @@ img{
 
 <body>
 
-<!-- 🔐 PASSWORD SLIDE -->
+<!-- 🔐 PASSWORD -->
 <div class="slide active" id="s0">
   <h1>🔐 Enter Password</h1>
   <input type="password" id="passInput" placeholder="Password">
@@ -125,13 +134,13 @@ img{
   <button id="noBtn">🤥 Nope</button>
 </div>
 
-<!-- 🟢 SLIDE 3 (IMAGES FIXED HERE) -->
+<!-- 🟢 SLIDE 3 -->
 <div class="slide" id="s2">
   <h2>📸 Our little moments</h2>
   <p>Every laugh, every random talk, every small chaos 😆</p>
   <p>You became my favorite memory 🌸</p>
 
-  <div>
+  <div class="image-container">
     <img src="pic1.jpg">
     <img src="bauni1.png">
     <img src="memory_2.jpg">
@@ -175,7 +184,7 @@ img{
 let current=0;
 const password="#proudlesbianbauni";
 
-/* PASSWORD CHECK */
+/* PASSWORD */
 function checkPass(){
   let inp=document.getElementById("passInput");
   let err=document.getElementById("error");
@@ -204,20 +213,27 @@ function nextSlide(){
   }
 }
 
-/* RUNAWAY BUTTONS */
-function runaway(btn){
-  btn.addEventListener("mouseover",move);
-  btn.addEventListener("click",move);
-  function move(){
-    btn.style.top=Math.random()*80+"vh";
-    btn.style.left=Math.random()*80+"vw";
-  }
+/* CHAOS MODE */
+function chaosMode(btn){
+  btn.style.position = "absolute";
+
+  setInterval(() => {
+    const maxX = window.innerWidth - btn.offsetWidth;
+    const maxY = window.innerHeight - btn.offsetHeight;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    btn.style.left = x + "px";
+    btn.style.top = y + "px";
+  }, 500);
 }
 
-runaway(document.getElementById("noBtn"));
-runaway(document.getElementById("b3"));
-runaway(document.getElementById("b4"));
-runaway(document.getElementById("b5"));
+/* INIT CHAOS */
+chaosMode(document.getElementById("noBtn"));
+chaosMode(document.getElementById("b3"));
+chaosMode(document.getElementById("b4"));
+chaosMode(document.getElementById("b5"));
 
 /* TYPING */
 function typeText(){
