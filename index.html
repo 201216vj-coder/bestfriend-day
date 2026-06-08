@@ -1,10 +1,187 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My First Website</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>For Bauni 💖</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:linear-gradient(135deg,#ffd6e7,#ffeef5);
+overflow:hidden;
+text-align:center;
+}
+
+.container{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+h1{
+color:#ff4d88;
+}
+
+button{
+padding:12px 25px;
+font-size:18px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+margin:10px;
+}
+
+#yesBtn{
+background:#ff4d88;
+color:white;
+}
+
+#noBtn{
+background:#ddd;
+}
+
+#envelopeScreen,
+#letterScreen{
+display:none;
+}
+
+.envelope{
+font-size:120px;
+cursor:pointer;
+animation:float 2s infinite ease-in-out;
+}
+
+@keyframes float{
+0%{transform:translateY(0);}
+50%{transform:translateY(-10px);}
+100%{transform:translateY(0);}
+}
+
+.photo{
+width:220px;
+height:220px;
+object-fit:cover;
+border-radius:20px;
+box-shadow:0 0 20px rgba(0,0,0,0.2);
+margin-bottom:20px;
+}
+
+.letter{
+background:white;
+padding:25px;
+border-radius:20px;
+max-width:600px;
+margin:auto;
+box-shadow:0 0 20px rgba(0,0,0,0.15);
+}
+
+.heart{
+position:fixed;
+font-size:20px;
+animation:rise 6s linear infinite;
+}
+
+@keyframes rise{
+0%{
+transform:translateY(100vh);
+opacity:1;
+}
+100%{
+transform:translateY(-100px);
+opacity:0;
+}
+}
+</style>
 </head>
+
 <body>
-    <h1>Happy Best Friend Day ❤️</h1>
-    <p>This website is for my best friend.</p>
+
+<div class="container" id="questionScreen">
+<h1>🤨 Are you the real Bauni?</h1>
+
+<div>
+<button id="yesBtn">Yes 😎</button>
+<button id="noBtn">Nope 🤥</button>
+</div>
+</div>
+
+<div class="container" id="envelopeScreen">
+<h1>Identity Confirmed 🎉</h1>
+<p>Tap the envelope 💌</p>
+<div class="envelope" onclick="openLetter()">💌</div>
+</div>
+
+<div class="container" id="letterScreen">
+
+<div class="letter">
+
+<img src="swati.jpg" class="photo">
+
+<h2>Bauni Verified ✅</h2>
+
+<p>
+Happy Best Friend Day, Swati! 💖
+<br><br>
+
+Thank you for putting up with my nonsense, laughing at terrible jokes, and making life more fun.
+<br><br>
+
+You're officially stuck with me as a friend now. 😆
+<br><br>
+
+Hope we make many more memories together!
+<br><br>
+
+Stay the awesome Bauni you are. 🌸
+<br><br>
+
+— Vini 💖
+<br><br>
+
+swatidaracer 🏎️✨
+</p>
+
+</div>
+</div>
+
+<script>
+
+const noBtn=document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover",()=>{
+const x=Math.random()*(window.innerWidth-120);
+const y=Math.random()*(window.innerHeight-60);
+
+noBtn.style.position="absolute";
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
+});
+
+document.getElementById("yesBtn").onclick=function(){
+document.getElementById("questionScreen").style.display="none";
+document.getElementById("envelopeScreen").style.display="flex";
+}
+
+function openLetter(){
+document.getElementById("envelopeScreen").style.display="none";
+document.getElementById("letterScreen").style.display="flex";
+
+for(let i=0;i<30;i++){
+let heart=document.createElement("div");
+heart.innerHTML="❤️";
+heart.className="heart";
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDelay=Math.random()*5+"s";
+document.body.appendChild(heart);
+}
+}
+
+</script>
+
 </body>
 </html>
