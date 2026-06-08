@@ -26,27 +26,17 @@ body{
   text-align:center;
   padding:20px;
   opacity:0;
-  transform:translateY(20px);
   transition:0.8s ease;
 }
 
 .slide.active{
   display:flex;
   opacity:1;
-  transform:translateY(0);
 }
 
 /* TEXT */
-h1,h2{
-  font-size:42px;
-  margin:10px;
-}
-
-p{
-  font-size:24px;
-  line-height:1.7;
-  max-width:750px;
-}
+h1,h2{ font-size:42px; margin:10px; }
+p{ font-size:24px; line-height:1.7; max-width:750px; }
 
 /* BUTTONS */
 button{
@@ -60,10 +50,7 @@ button{
   transition:0.3s;
   font-family:'Cormorant Garamond', serif;
 }
-
-button:hover{
-  transform:scale(1.1);
-}
+button:hover{ transform:scale(1.1); }
 
 /* INPUT */
 input{
@@ -86,21 +73,21 @@ input{
   75%{transform:translateX(-5px);}
 }
 
-/* IMAGE GRID FIX */
-img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:15px;
-  box-shadow:0 10px 20px rgba(0,0,0,0.2);
-}
-
+/* IMAGE FIX (CLEAN GALLERY) */
 .image-container{
   display:grid;
   grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
   gap:15px;
   max-width:800px;
   margin-top:15px;
+}
+
+.image-container img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  border-radius:15px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);
 }
 
 /* HEARTS */
@@ -113,6 +100,12 @@ img{
 @keyframes floatUp{
   from{transform:translateY(0);opacity:1;}
   to{transform:translateY(-700px);opacity:0;}
+}
+
+/* CHAOS BUTTON FIX */
+.moving-btn{
+  position:fixed !important;
+  z-index:9999;
 }
 </style>
 </head>
@@ -137,7 +130,7 @@ img{
 <!-- 🟢 SLIDE 3 -->
 <div class="slide" id="s2">
   <h2>📸 Our little moments</h2>
-  <p>Every laugh, every random talk, every small chaos 😆</p>
+  <p>Every laugh, every chaos 😆</p>
   <p>You became my favorite memory 🌸</p>
 
   <div class="image-container">
@@ -153,10 +146,9 @@ img{
 <!-- 🔵 SLIDE 4 -->
 <div class="slide" id="s3">
   <h2>💖 Appreciation</h2>
-  <p>For smiling through my nonsense 😆💖</p>
-  <p>For making normal days feel better 🌸</p>
-  <p>For always being there 😅</p>
-  <p>You’re the best Bauni hg ✨</p>
+  <p>For always smiling 🌸</p>
+  <p>You’re the best ✨</p>
+
   <button onclick="nextSlide()">😝 Next</button>
   <button id="b4">❌ Close</button>
 </div>
@@ -164,10 +156,8 @@ img{
 <!-- 🟠 SLIDE 5 -->
 <div class="slide" id="s4">
   <h2>😎 Official Notice</h2>
-  <p>You are now permanently stuck 😆</p>
-  <p>No escape plan exists 🔒</p>
-  <p>Forever Bauni system 💖</p>
-  <p>Enjoy your stay 😌</p>
+  <p>You are stuck 😆</p>
+
   <button onclick="nextSlide()">😝 Continue</button>
   <button id="b5">🔓 Escape</button>
 </div>
@@ -176,7 +166,7 @@ img{
 <div class="slide" id="s5">
   <h2>💌 Final Message</h2>
   <p id="finalText"></p>
-  <h3>Stay my Bauni hg forever 🌸💖✨</h3>
+  <h3>Stay forever 🌸💖</h3>
 </div>
 
 <script>
@@ -213,23 +203,20 @@ function nextSlide(){
   }
 }
 
-/* CHAOS MODE */
+/* CHAOS MODE (FIXED) */
 function chaosMode(btn){
-  btn.style.position = "absolute";
+  btn.classList.add("moving-btn");
 
   setInterval(() => {
     const maxX = window.innerWidth - btn.offsetWidth;
     const maxY = window.innerHeight - btn.offsetHeight;
 
-    const x = Math.random() * maxX;
-    const y = Math.random() * maxY;
-
-    btn.style.left = x + "px";
-    btn.style.top = y + "px";
+    btn.style.left = Math.random()*maxX + "px";
+    btn.style.top = Math.random()*maxY + "px";
   }, 500);
 }
 
-/* INIT CHAOS */
+/* APPLY CHAOS */
 chaosMode(document.getElementById("noBtn"));
 chaosMode(document.getElementById("b3"));
 chaosMode(document.getElementById("b4"));
@@ -237,7 +224,7 @@ chaosMode(document.getElementById("b5"));
 
 /* TYPING */
 function typeText(){
-  const text="You didn’t just become a memory… you became my favorite part of everything 💖";
+  const text="You became my favorite part of everything 💖";
   let i=0;
   let el=document.getElementById("finalText");
 
