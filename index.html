@@ -5,264 +5,478 @@
 <title>Bauni Story Game</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
-body{
-  margin:0;
-  font-family:'Cormorant Garamond', serif;
-  background: linear-gradient(135deg,#ffdde1,#ee9ca7);
-  overflow:hidden;
+:root {
+  --pink-light: #fff0f3;
+  --pink-mid:   #ffd6e0;
+  --pink-deep:  #ee9ca7;
+  --rose:       #c0395a;
+  --rose-dark:  #8b2040;
+  --text:       #3a1a24;
+  --text-muted: #7a4055;
+  --white:      #fff;
+  --transition: 0.75s cubic-bezier(0.16,1,0.3,1);
 }
 
-/* 🌸 SLIDE ENTRY */
-.slide{
-  display:none;
-  height:100vh;
-  width:100vw;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  text-align:center;
-  padding:20px;
-  opacity:0;
-  transform:translateY(30px);
-  transition:0.8s ease;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: "Lato", sans-serif;
+  background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 60%, #d4728a 100%);
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
 }
 
-.slide.active{
-  display:flex;
-  opacity:1;
-  transform:translateY(0);
+.slide {
+  display: none;
+  position: absolute;
+  inset: 0;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: clamp(24px,5vw,64px) clamp(20px,6vw,80px);
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: opacity var(--transition), transform var(--transition);
+  overflow-y: auto;
 }
 
-/* 💌 BIG EMOTIONAL PARAGRAPHS */
-p{
-  font-size:28px;
-  line-height:2;
-  max-width:850px;
-  margin:12px auto;
+.slide.active {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
-/* HEADINGS */
-h1,h2{
-  font-size:46px;
-  margin:10px;
+.card {
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.85);
+  box-shadow: 0 8px 40px rgba(180,60,90,0.13), 0 2px 8px rgba(180,60,90,0.07);
+  padding: clamp(28px,5vw,56px) clamp(24px,6vw,68px);
+  max-width: 800px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  animation: slideIn 0.65s cubic-bezier(0.16,1,0.3,1) both;
 }
 
-/* 🖱️ BUTTONS */
-button{
-  padding:14px 24px;
-  border:none;
-  border-radius:20px;
-  cursor:pointer;
-  font-size:18px;
-  margin:10px;
-  background:white;
-  font-family:'Cormorant Garamond', serif;
-  transition:0.35s ease;
+@keyframes slideIn {
+  from { opacity:0; transform:translateY(28px) scale(0.97); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
 }
 
-button:hover{
-  transform:scale(1.1);
+h1, h2 {
+  font-family: "Cormorant Garamond", serif;
+  color: var(--rose-dark);
+  font-weight: 600;
+  line-height: 1.2;
+  font-size: clamp(1.9rem,5vw,3rem);
+  letter-spacing: -0.01em;
 }
 
-/* IMAGE */
-.image-container{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
-  gap:15px;
-  max-width:850px;
-  margin-top:20px;
+h3 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.2rem,3vw,1.9rem);
+  color: var(--rose);
+  font-style: italic;
+  font-weight: 400;
 }
 
-.image-container img{
-  width:100%;
-  height:240px;
-  object-fit:cover;
-  border-radius:15px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+.emoji-icon { font-size: clamp(2.5rem,6vw,4rem); line-height:1; display:block; margin-bottom:4px; }
+
+p {
+  font-family: "Lato", sans-serif;
+  font-size: clamp(0.95rem,2vw,1.12rem);
+  line-height: 1.9;
+  color: var(--text);
+  max-width: 640px;
+  text-align: left;
+  font-weight: 300;
 }
 
-/* NO BUTTON */
-#noBtn{
-  position:fixed;
-  z-index:9999;
+p.center { text-align:center; }
+
+.para-block { display:flex; flex-direction:column; gap:16px; width:100%; max-width:640px; }
+
+.divider { width:60px; height:2px; background:linear-gradient(90deg,transparent,var(--pink-deep),transparent); border:none; margin:2px auto; }
+
+input[type="password"] {
+  padding: 14px 22px;
+  border: 1.5px solid var(--pink-deep);
+  border-radius: 50px;
+  font-size: 1.05rem;
+  font-family: "Lato", sans-serif;
+  color: var(--text);
+  background: rgba(255,255,255,0.8);
+  outline: none;
+  width: 100%;
+  max-width: 320px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  text-align: center;
 }
 
-/* ❤️ HEARTS */
-.heart{
-  position:absolute;
-  color:red;
-  animation: floatUp 6s linear forwards;
-  opacity:0.8;
+input[type="password"]:focus {
+  border-color: var(--rose);
+  box-shadow: 0 0 0 4px rgba(192,57,90,0.12);
 }
 
-@keyframes floatUp{
-  from{transform:translateY(0);opacity:1;}
-  to{transform:translateY(-900px);opacity:0;}
+.btn-row { display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:4px; }
+
+button.btn {
+  padding: 13px 32px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+  color: white;
+  box-shadow: 0 4px 18px rgba(140,30,60,0.25);
+}
+
+button.btn:hover { transform:translateY(-2px) scale(1.04); box-shadow:0 8px 28px rgba(140,30,60,0.32); }
+button.btn:active { transform:scale(0.97); }
+
+button.btn-ghost {
+  background: rgba(255,255,255,0.7);
+  color: var(--rose);
+  border: 1.5px solid var(--pink-deep);
+  box-shadow: none;
+}
+button.btn-ghost:hover { background:white; }
+
+#error { color:var(--rose); font-size:0.9rem; min-height:18px; }
+
+.image-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; width:100%; max-width:600px; margin-top:4px; }
+.image-grid img { width:100%; height:190px; object-fit:cover; border-radius:16px; box-shadow:0 6px 20px rgba(180,60,90,0.18); transition:transform 0.3s ease; }
+.image-grid img:hover { transform:scale(1.03); }
+
+#finalText {
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.3rem,3vw,2rem);
+  font-style: italic;
+  color: var(--rose-dark);
+  text-align: center;
+  line-height: 1.6;
+  min-height: 2.8em;
+}
+
+#noBtn {
+  position: fixed !important;
+  z-index: 9999;
+  background: rgba(255,255,255,0.8) !important;
+  color: var(--text-muted) !important;
+  border: 1.5px solid var(--pink-deep) !important;
+  box-shadow: none !important;
+  font-size: 0.9rem !important;
+  padding: 10px 22px !important;
+}
+
+.heart { position:fixed; pointer-events:none; animation:floatUp 5s ease-in forwards; z-index:9998; }
+
+@keyframes floatUp {
+  0%   { transform:translateY(0) rotate(0deg);   opacity:1; }
+  50%  { transform:translateY(-45vh) rotate(12deg); opacity:0.7; }
+  100% { transform:translateY(-95vh) rotate(-8deg); opacity:0; }
+}
+
+.progress { display:none; position:fixed; top:18px; left:50%; transform:translateX(-50%); gap:8px; z-index:100; }
+.progress.visible { display:flex; }
+.dot { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,0.4); transition:background 0.4s,transform 0.4s; }
+.dot.active { background:white; transform:scale(1.5); }
+.dot.done { background:rgba(255,255,255,0.75); }
+
+@media (max-width:600px) {
+  .card { padding:28px 18px; }
+  .image-grid img { height:150px; }
 }
 </style>
 </head>
-
 <body>
 
-<!-- 🔐 PASSWORD -->
+<div class="progress" id="progressDots">
+  <div class="dot" id="d1"></div>
+  <div class="dot" id="d2"></div>
+  <div class="dot" id="d3"></div>
+  <div class="dot" id="d4"></div>
+  <div class="dot" id="d5"></div>
+</div>
+
+<!-- SLIDE 0 — PASSWORD -->
 <div class="slide active" id="s0">
-  <h1>🔐 Enter Password</h1>
-  <input type="password" id="passInput" placeholder="Password">
-  <button onclick="checkPass()">Unlock</button>
-  <p id="error"></p>
-</div>
-
-<!-- 🟡 SLIDE 2 -->
-<div class="slide" id="s1">
-  <h2>🤨 Are you the real Bauni?</h2>
-
-  <p>
-    This is not just a question… it is a test of memories, emotions, and everything we shared.
-    If you are really Bauni, you already know the answer hidden in our moments.
-  </p>
-
-  <button onclick="nextSlide()">😝 Yes</button>
-  <button id="noBtn">🤥 Nope</button>
-</div>
-
-<!-- 🟢 SLIDE 3 -->
-<div class="slide" id="s2">
-  <h2>📸 Our Memories</h2>
-
-  <p>
-    Every laugh we shared, every random conversation, every silly chaos —
-    slowly became something I never expected to become so important.
-  </p>
-
-  <p>
-    You didn’t just become a part of my days…
-    you became a part of my thoughts, my comfort, my favorite silence.
-  </p>
-
-  <div class="image-container">
-    <img src="pic1.jpg">
-    <img src="bauni1.png">
-    <img src="memory_2.jpg">
+  <div class="card">
+    <span class="emoji-icon">🔐</span>
+    <h1>Enter Password</h1>
+    <hr class="divider">
+    <p class="center">
+      This little world was made just for someone very special. If you know the password,
+      you already know how much you matter to the person who built this.
+    </p>
+    <input type="password" id="passInput" placeholder="Type your password…">
+    <div class="btn-row">
+      <button class="btn" onclick="checkPass()">✨ Unlock</button>
+    </div>
+    <p id="error"></p>
   </div>
-
-  <button onclick="nextSlide()">😝 Next</button>
 </div>
 
-<!-- 🔵 SLIDE 4 -->
+<!-- SLIDE 1 — ARE YOU BAUNI? -->
+<div class="slide" id="s1">
+  <div class="card">
+    <span class="emoji-icon">🤨</span>
+    <h2>Are you the real Bauni?</h2>
+    <hr class="divider">
+    <div class="para-block">
+      <p>
+        This is not just a question — it is a test of memories, emotions, and everything we have quietly
+        shared without making a big deal about it. If you are really Bauni, you already feel the answer
+        somewhere in your chest before your brain even processes it, because that is how these things work
+        when they actually mean something.
+      </p>
+      <p>
+        Because the real Bauni would recognise the little things — the inside jokes that don't need
+        explaining, the random conversations that somehow stretched on for hours without either of us
+        noticing, the way everything feels slightly warmer when you're around. The password alone doesn't
+        prove who you are. Only you would smile reading this and know exactly what I mean.
+      </p>
+      <p>
+        So take a breath, and answer honestly — are you really the person this whole thing was made for?
+        If yes, you're about to see something built with a lot of care, a little bit of chaos, and a lot of
+        genuine feeling. Just like everything between us.
+      </p>
+    </div>
+    <div class="btn-row">
+      <button class="btn" onclick="nextSlide()">😝 Yes, that's me</button>
+      <button class="btn btn-ghost" id="noBtn">🤥 Nope, not me</button>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 2 — OUR MEMORIES -->
+<div class="slide" id="s2">
+  <div class="card">
+    <span class="emoji-icon">📸</span>
+    <h2>Our Memories</h2>
+    <hr class="divider">
+    <div class="para-block">
+      <p>
+        Every laugh we shared, every random conversation that started with nothing and somehow ended
+        two hours later, every moment of chaos we navigated together — all of it slowly, quietly stacked
+        up into something I never expected to feel so significant. It's funny how that happens. You don't
+        notice it building until one day you look back and realise how many small moments became big ones.
+      </p>
+      <p>
+        You didn't just become a part of my days. You became a part of how I think, how I rest, and how I
+        experience the ordinary hours between the big things. Your presence has this quiet way of making
+        everything feel a little softer — like there's always a corner of calm no matter what's going on
+        around us. I didn't plan on that. It just happened, and I'm really glad it did.
+      </p>
+      <p>
+        These pictures below aren't just images. They're proof — proof that we existed in real moments,
+        that we laughed at real things, that this isn't something I made up. Every one of them holds a
+        feeling I carry around without even meaning to. I hope when you look at them, you feel it too.
+      </p>
+    </div>
+    <div class="image-grid">
+      <img src="pic1.jpg" alt="A shared memory" loading="lazy">
+      <img src="bauni1.png" alt="Bauni" loading="lazy">
+      <img src="memory_2.jpg" alt="Another cherished moment" loading="lazy">
+    </div>
+    <div class="btn-row">
+      <button class="btn" onclick="nextSlide()">💫 Next</button>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3 — APPRECIATION -->
 <div class="slide" id="s3">
-  <h2>💖 Appreciation</h2>
-
-  <p>
-    For the way you stay even when things are random.
-    For the way you smile through chaos without even trying.
-  </p>
-
-  <p>
-    For being someone who makes ordinary days feel softer,
-    warmer, and a little more meaningful than before.
-  </p>
-
-  <button onclick="nextSlide()">😝 Next</button>
+  <div class="card">
+    <span class="emoji-icon">💖</span>
+    <h2>Appreciation</h2>
+    <hr class="divider">
+    <div class="para-block">
+      <p>
+        For the way you stay even when things get random, confusing, or a little too much — you don't
+        flinch. You just exist there, steady and warm, and somehow that steadiness makes everything
+        around it easier to handle. A lot of people would've stepped back. You didn't. That matters more
+        than you probably know, and I think about it more often than I let on.
+      </p>
+      <p>
+        For the way you smile through chaos without even trying to — like it doesn't cost you anything to
+        bring lightness into a room. That's a rare thing. Most people carry their stress visibly, and there's
+        nothing wrong with that, but you have this way of making heaviness feel a little lighter just by
+        being there. It's genuinely one of the most underrated things about you.
+      </p>
+      <p>
+        For being someone who makes ordinary days feel softer, warmer, and a little more meaningful than
+        they would have been without you. Not in a dramatic way — in the quiet, consistent way that
+        actually sticks and stays and becomes something you can't imagine the days without. Thank you for
+        being exactly the person you are. Unhurried, real, and genuinely kind.
+      </p>
+    </div>
+    <div class="btn-row">
+      <button class="btn" onclick="nextSlide()">🌸 Next</button>
+    </div>
+  </div>
 </div>
 
-<!-- 🟠 SLIDE 5 -->
+<!-- SLIDE 4 — OFFICIAL NOTICE -->
 <div class="slide" id="s4">
-  <h2>😎 Official Notice</h2>
-
-  <p>
-    You are now officially stuck inside this little world I built.
-    There is no exit because honestly… I don’t want there to be one.
-  </p>
-
-  <button onclick="nextSlide()">😝 Continue</button>
+  <div class="card">
+    <span class="emoji-icon">😎</span>
+    <h2>Official Notice</h2>
+    <hr class="divider">
+    <div class="para-block">
+      <p>
+        You are now officially, legally, and emotionally stuck inside this tiny little world I built. I know
+        that sounds dramatic, but hear me out — I put actual effort into this. There was CSS, JavaScript,
+        way too many font decisions, and at least three minor breakdowns over spacing and colours. You are
+        not allowed to just close the tab and walk away from that kind of dedication.
+      </p>
+      <p>
+        There is no exit button because, honestly, I don't want there to be one. I want you to stay here in
+        this small, slightly chaotic digital space I made just for you — for as long as it makes you feel
+        something good. Even if it's just for a few more minutes. Even if it's just a quiet smile sitting
+        alone in a room. That's enough. That was always the whole point.
+      </p>
+      <p>
+        So consider this your formal, official, completely non-binding but emotionally very binding notice:
+        you are important, you are seen, and you are not getting rid of me or this little pink corner of the
+        internet anytime soon. Proceed with that information however you'd like — but you've been warned.
+      </p>
+    </div>
+    <div class="btn-row">
+      <button class="btn" onclick="nextSlide()">🏳️ I accept</button>
+    </div>
+  </div>
 </div>
 
-<!-- 🔴 FINAL -->
+<!-- SLIDE 5 — FINAL -->
 <div class="slide" id="s5">
-  <h2>💌 Final Message</h2>
-  <p id="finalText"></p>
-  <h3>Stay forever 💖</h3>
+  <div class="card">
+    <span class="emoji-icon">💌</span>
+    <h2>Final Message</h2>
+    <hr class="divider">
+    <div class="para-block" id="finalParas" style="opacity:0;transition:opacity 0.9s ease;">
+      <p>
+        If you've made it here, past the password and the silly "No" button and all the slides in between,
+        then you already know this was made for you with something genuine behind it. Not just effort —
+        though there was plenty of that — but actual feeling. The kind that makes you want to build an
+        entire small website instead of just sending a text, because somehow that felt more honest.
+      </p>
+      <p>
+        You mean more to me than I usually know how to say out loud. So I said it in CSS and transitions
+        and floating hearts instead. I hope that counts. I hope reading through all of this felt like a warm
+        hug from a screen — quiet, a little overwhelming, but mostly just good and real and true.
+      </p>
+    </div>
+    <p id="finalText"></p>
+    <h3 id="stayMsg" style="opacity:0;transition:opacity 1.2s ease;margin-top:8px;">Stay forever 💖</h3>
+  </div>
 </div>
 
 <script>
+let current = 0;
+const password = "#proudlesbianbauni";
 
-let current=0;
-const password="#proudlesbianbauni";
-
-/* PASSWORD */
-function checkPass(){
-  let inp=document.getElementById("passInput");
-  let err=document.getElementById("error");
-
-  if(inp.value===password){
+function checkPass() {
+  const inp = document.getElementById("passInput");
+  const err = document.getElementById("error");
+  if (inp.value.trim() === password) {
     showSlide(1);
-  }else{
-    err.innerText="Try again 😆";
+    document.getElementById("progressDots").classList.add("visible");
+    updateDots(1);
+  } else {
+    err.innerText = "Hmm, that\'s not it 😆 Try again!";
+    inp.focus();
+    inp.select();
   }
 }
 
-/* SLIDES */
-function showSlide(n){
-  document.querySelectorAll('.slide').forEach(s=>s.classList.remove('active'));
-  document.getElementById('s'+n).classList.add('active');
-  current=n;
+document.getElementById("passInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") checkPass();
+});
+
+function showSlide(n) {
+  document.querySelectorAll(".slide").forEach(s => s.classList.remove("active"));
+  document.getElementById("s" + n).classList.add("active");
+  current = n;
+  updateDots(n);
 }
 
-/* NEXT */
-function nextSlide(){
+function nextSlide() {
   current++;
   showSlide(current);
-  if(current===5) typeText();
+  if (current === 5) startFinal();
 }
 
-/* 💥 NO BUTTON MOVEMENT */
-const noBtn=document.getElementById("noBtn");
-
-function moveNo(){
-  const x=Math.random()*(window.innerWidth-noBtn.offsetWidth);
-  const y=Math.random()*(window.innerHeight-noBtn.offsetHeight);
-
-  noBtn.style.left=x+"px";
-  noBtn.style.top=y+"px";
+function updateDots(n) {
+  document.querySelectorAll(".dot").forEach((d, i) => {
+    d.classList.remove("active", "done");
+    if (i + 1 === n) d.classList.add("active");
+    else if (i + 1 < n) d.classList.add("done");
+  });
 }
 
-noBtn.addEventListener("mouseenter",moveNo);
-noBtn.addEventListener("click",(e)=>{e.preventDefault();moveNo();});
-noBtn.addEventListener("touchstart",(e)=>{e.preventDefault();moveNo();});
-setInterval(moveNo,1200);
+const noBtn = document.getElementById("noBtn");
+function moveNo() {
+  const m = 20;
+  const x = m + Math.random() * (window.innerWidth  - noBtn.offsetWidth  - m * 2);
+  const y = m + Math.random() * (window.innerHeight - noBtn.offsetHeight - m * 2);
+  noBtn.style.left = x + "px";
+  noBtn.style.top  = y + "px";
+}
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("click", e => { e.preventDefault(); moveNo(); });
+noBtn.addEventListener("touchstart", e => { e.preventDefault(); moveNo(); });
+setInterval(moveNo, 1300);
 
-/* 💌 FINAL TEXT */
-function typeText(){
-  const text="You became my favorite part of everything 💖";
-  let i=0;
-  let el=document.getElementById("finalText");
+function startFinal() {
+  setTimeout(() => { document.getElementById("finalParas").style.opacity = "1"; }, 400);
+  setTimeout(typeText, 2200);
+}
 
-  let interval=setInterval(()=>{
-    el.innerHTML+=text[i];
-    i++;
-    if(i>=text.length){
-      clearInterval(interval);
+function typeText() {
+  const text = "You became my favorite part of everything 💖";
+  let i = 0;
+  const el = document.getElementById("finalText");
+  const iv = setInterval(() => {
+    el.innerHTML += text[i++];
+    if (i >= text.length) {
+      clearInterval(iv);
+      setTimeout(() => { document.getElementById("stayMsg").style.opacity = "1"; }, 600);
       hearts();
     }
-  },40);
+  }, 45);
 }
 
-/* ❤️ HEARTS */
-function hearts(){
-  setInterval(()=>{
-    let h=document.createElement("div");
-    h.className="heart";
-    h.innerHTML="❤️";
-    h.style.left=Math.random()*100+"vw";
+function hearts() {
+  const emojis = ["❤️","🩷","💕","💗","💖","🌸","✨"];
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.bottom = "-60px";
+    h.style.fontSize = (1.2 + Math.random() * 1.4) + "rem";
     document.body.appendChild(h);
-    setTimeout(()=>h.remove(),6000);
-  },400);
+    setTimeout(() => h.remove(), 5300);
+  }, 380);
 }
-
 </script>
-
 </body>
 </html>
